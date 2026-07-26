@@ -2,18 +2,17 @@
 
 This document defines the implementation roadmap for the Explainability-as-a-Service (EaaS) prototype.
 
+Status legend: **Done** | **Next** | Planned
+
 ---
 
-# Step 1 — Project Setup
+# Step 1 — Project Setup — Done
 
 Objectives:
 
 - Create project structure
-
 - Configure FastAPI application
-
 - Implement health check endpoint
-
 - Verify server execution
 
 Deliverable:
@@ -22,16 +21,13 @@ Deliverable:
 
 ---
 
-# Step 2 — Model Training
+# Step 2 — Model Training — Done
 
 Objectives:
 
 - Train RandomForest model
-
 - Train LogisticRegression model
-
 - Save models to artifacts
-
 - Save training data
 
 Deliverable:
@@ -40,21 +36,20 @@ Deliverable:
 
 ---
 
-# Step 3 — ModelAdapter
+# Step 3 — ModelAdapter — Done
 
 Objectives:
 
 - Implement model abstraction layer.
-
 - Standardize model interaction.
 
 Methods:
 
 - load_model()
-
 - predict()
-
+- predict_proba()
 - get_training_data()
+- get_feature_names()
 
 Deliverable:
 
@@ -62,12 +57,11 @@ Deliverable:
 
 ---
 
-# Step 4 — Prediction Endpoint
+# Step 4 — Prediction Endpoint — Done
 
 Objectives:
 
 - Implement POST /predict.
-
 - Integrate ModelAdapter.
 
 Deliverable:
@@ -76,12 +70,11 @@ Deliverable:
 
 ---
 
-# Step 5 — MethodManager + SHAP
+# Step 5 — MethodManager + SHAP — Done
 
 Objectives:
 
 - Implement method selection layer.
-
 - Add SHAP explanations.
 
 Deliverable:
@@ -90,79 +83,101 @@ Deliverable:
 
 ---
 
-# Step 6 — LIME Integration
-
-Objectives:
-
-- Integrate LIME.
-
-- Preserve response schema consistency.
-
-Deliverable:
-
-- SHAP and LIME producing identical response structures.
-
----
-
-# Step 7 — ExplanationEngine + /explain
+# Step 6 — ExplanationEngine — Done
 
 Objectives:
 
 - Implement orchestration layer.
-
-- Integrate ModelAdapter and MethodManager.
-
-Deliverable:
-
-- Fully functional explanation pipeline.
-
----
-
-# Step 8 — Model-Agnostic Demonstration
-
-Objectives:
-
-- Validate architecture against both models.
+- Coordinate ModelAdapter and MethodManager.
+- Assemble the unified explanation response.
 
 Deliverable:
 
-- Same endpoint supporting multiple models.
+- Stateless ExplanationEngine as the architectural centerpiece.
 
 ---
 
-# Step 9 — Error Handling
+# Step 7 — /explain Endpoint — Done
 
 Objectives:
 
-- Standardized errors.
-
-- Input validation.
-
-- Graceful handling of invalid requests.
+- Expose ExplanationEngine through POST /explain.
+- Keep the API layer thin (validation and transport only).
 
 Deliverable:
 
-- Stable API behavior.
+- Fully functional explanation API supporting the frozen architecture.
 
 ---
 
-# Step 10 — End-to-End Testing
+# Step 8 — LIME Integration — Done
 
 Objectives:
 
-- Build test script.
+- Integrate LIME into MethodManager.
+- Preserve the public `explain(...)` interface.
+- Preserve response schema consistency with SHAP.
 
-- Demonstrate all scenarios.
+Deliverable:
+
+- SHAP and LIME producing identical response structures.
+- MethodEnum exposing both `shap` and `lime`.
+
+---
+
+# Architecture Freeze — Done
+
+Objectives:
+
+- Synchronize documentation with the implemented architecture.
+- Confirm unsupported-method rejection in MethodManager.
+- Freeze public contracts before validation.
+
+Deliverable:
+
+- Documentation and code aligned; architecture ready for validation.
+
+---
+
+# Step 9 — Model-Agnostic Demonstration — Next
+
+Objectives:
+
+- Validate architecture against both models and both methods.
 
 Scenarios:
 
 1. RandomForest + SHAP
-
 2. RandomForest + LIME
-
 3. LogisticRegression + SHAP
-
 4. LogisticRegression + LIME
+
+Deliverable:
+
+- Evidence that the same architecture supports multiple models and methods without structural changes.
+
+---
+
+# Step 10 — Error Handling Review — Planned
+
+Objectives:
+
+- Confirm standardized errors.
+- Confirm input validation.
+- Confirm graceful handling of invalid requests.
+
+Deliverable:
+
+- Stable API behavior under invalid inputs.
+
+---
+
+# Step 11 — End-to-End Testing — Planned
+
+Objectives:
+
+- Build demonstration / test coverage for thesis evaluation.
+- Exercise all model × method combinations.
 
 Deliverable:
 
@@ -175,9 +190,6 @@ Deliverable:
 A lightweight cloud-deployable prototype that demonstrates:
 
 - explainability externalization,
-
 - standardized explanation interfaces,
-
 - model-agnostic orchestration,
-
 - API-driven operationalization of explainability.

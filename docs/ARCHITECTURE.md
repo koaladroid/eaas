@@ -8,15 +8,23 @@ Explainability should be treated as an independently orchestrated service capabi
 
 # High-Level Architecture
 
-API Layer
-
-↓
-
+```
+Client
+  │
+  ▼
+API Layer  (/predict, /explain)
+  │
+  ▼
 ExplanationEngine
-
-↓
-
-ModelAdapter + MethodManager
+  │
+  ├──────────────┐
+  ▼              ▼
+ModelAdapter   MethodManager
+                 │
+            ┌────┴────┐
+            ▼         ▼
+          SHAP       LIME
+```
 
 ---
 
@@ -27,21 +35,15 @@ ModelAdapter + MethodManager
 Responsibilities:
 
 - HTTP request handling
-
 - Input validation
-
 - Response formatting
-
 - Exposing endpoints
 
 Must NOT:
 
 - Execute SHAP
-
 - Execute LIME
-
 - Load models
-
 - Contain business logic
 
 ---
@@ -51,13 +53,9 @@ Must NOT:
 Responsibilities:
 
 - Central orchestration layer
-
 - Coordinate explanation workflow
-
 - Invoke ModelAdapter
-
 - Invoke MethodManager
-
 - Construct unified responses
 
 This is the architectural centerpiece of EaaS.
@@ -65,9 +63,7 @@ This is the architectural centerpiece of EaaS.
 Must NOT:
 
 - Contain HTTP logic
-
 - Implement SHAP or LIME directly
-
 - Load models directly
 
 ---
@@ -77,25 +73,21 @@ Must NOT:
 Responsibilities:
 
 - Abstract model interaction
-
 - Load models
-
 - Perform predictions
-
-- Provide training data
+- Provide training data and feature names
 
 Methods:
 
-- load_model(model_name)
-
+- load_model()
 - predict(input_data)
-
+- predict_proba(input_data)
 - get_training_data()
+- get_feature_names()
 
 Supported Models:
 
 - random_forest
-
 - logistic_regression
 
 Purpose:
@@ -109,20 +101,24 @@ Demonstrates model decoupling and model agnosticism.
 Responsibilities:
 
 - Select explanation method
-
 - Execute SHAP or LIME
+- Normalize outputs into a shared schema
+- Reject unsupported methods with a descriptive error
 
-- Normalize outputs
+Public interface:
+
+- explain(method, model_adapter, input_data, prediction)
 
 Supported Methods:
 
 - shap
-
 - lime
 
 Purpose:
 
-Demonstrates explanation interface standardization.
+Demonstrates explanation interface standardization and extensibility.
+
+Both SHAP and LIME are implemented. Adding a method requires extending MethodManager (and the API method enum) without changing ExplanationEngine or ModelAdapter.
 
 ---
 
@@ -130,70 +126,57 @@ Demonstrates explanation interface standardization.
 
 Allowed:
 
+```
 API Layer
-
-↓
-
+  ↓
 ExplanationEngine
-
-↓
-
+  ↓
 ModelAdapter + MethodManager
+```
 
 Forbidden:
 
-❌ API → SHAP directly
-
-❌ API → LIME directly
-
-❌ API → Model loading directly
-
-❌ MethodManager → HTTP objects
-
-❌ ExplanationEngine → HTTP objects
-
-❌ Route handlers containing explanation logic
+- API → SHAP directly
+- API → LIME directly
+- API → Model loading directly
+- MethodManager → HTTP objects
+- ExplanationEngine → HTTP objects
+- Route handlers containing explanation logic
 
 ---
 
 # Data Flow
 
+```
 Client Request
-
-↓
-
+  ↓
 API Endpoint
-
-↓
-
+  ↓
 ExplanationEngine
-
-↓
-
-ModelAdapter (prediction)
-
-↓
-
-MethodManager (explanation)
-
-↓
-
+  ↓
+ModelAdapter (prediction + probability)
+  ↓
+MethodManager (SHAP or LIME explanation)
+  ↓
 Unified Response
-
-↓
-
+  ↓
 Client
+```
 
 ---
 
 # Architectural Goals
 
 1. Service abstraction
-
 2. Model agnosticism
-
 3. Explanation standardization
-
 4. Orchestration independence
-
 5. Separation of concerns
+
+---
+
+# Architecture Status
+
+The architecture is **frozen** for validation.
+
+Public contracts of ModelAdapter, MethodManager, ExplanationEngine, and the API are stable.

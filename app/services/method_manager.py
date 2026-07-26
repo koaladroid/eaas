@@ -6,14 +6,19 @@ from sklearn.linear_model import LogisticRegression
 
 
 class MethodManager:
-    """Selects and executes explanation methods behind a common interface."""
+    """Selects and executes explanation methods (SHAP, LIME) behind a common interface."""
+
+    SUPPORTED_METHODS = ("shap", "lime")
 
     def explain(self, method, model_adapter, input_data, prediction):
         if method == "shap":
             return self._run_shap(model_adapter, input_data, prediction)
         if method == "lime":
             return self._run_lime(model_adapter, input_data, prediction)
-        raise ValueError(f"Unsupported explanation method: {method}")
+        raise ValueError(
+            f"Unsupported explanation method: {method}. "
+            f"Supported methods: {', '.join(self.SUPPORTED_METHODS)}"
+        )
 
     def _run_shap(self, model_adapter, input_data, prediction):
         model = model_adapter.model
