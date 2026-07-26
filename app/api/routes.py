@@ -17,6 +17,7 @@ class ModelEnum(str, Enum):
 
 class MethodEnum(str, Enum):
     shap = "shap"
+    lime = "lime"
 
 
 # Preserve existing /predict query-parameter typing.
