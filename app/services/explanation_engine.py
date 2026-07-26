@@ -19,10 +19,10 @@ class ExplanationEngine:
             prediction=prediction,
         )
 
-        return {
+        response = {
             "model": model,
-            "method": explanation["method"],
             "prediction": prediction,
             "probability": probability,
-            "feature_importance": explanation["feature_importance"],
         }
+        response.update(explanation)
+        return response
