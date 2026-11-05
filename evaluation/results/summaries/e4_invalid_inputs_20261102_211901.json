@@ -1,0 +1,216 @@
+{
+  "experiment_id": "E4",
+  "execution_status": "completed",
+  "overall_outcome": "completed",
+  "completed_experiment": true,
+  "success_criterion_note": "E4 records observed rejection behavior. Only HTTP 4xx counts as rejected. HTTP 5xx is a server error, not a client-input rejection. HTTP 200 with an explanation is unexpected success; HTTP 200 without an explanation is unexpected_response.",
+  "protocol_expectations_note": "documented_error_type values come from EVALUATION_GUIDELINES.md / the written error envelope. Deviations from those types are recorded, not silently passed.",
+  "counts": {
+    "planned_attempts": 18,
+    "attempts_completed": 18,
+    "rejected": 18,
+    "http_4xx_rejections": 18,
+    "http_5xx_server_errors": 0,
+    "unexpected_success": 0,
+    "unexpected_http_200_responses": 0,
+    "unexpected_http_statuses": 0,
+    "transport_error_count": 0
+  },
+  "http_status_distribution": {
+    "422": 18
+  },
+  "by_test_case": {
+    "E4.1": {
+      "test_case_name": "unsupported_model",
+      "documented_error_type": "InvalidModelError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 0,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    },
+    "E4.2": {
+      "test_case_name": "unsupported_method",
+      "documented_error_type": "InvalidMethodError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 0,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    },
+    "E4.3": {
+      "test_case_name": "incorrect_feature_count",
+      "documented_error_type": "ValidationError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 3,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    },
+    "E4.4": {
+      "test_case_name": "nonnumeric_feature",
+      "documented_error_type": "ValidationError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 3,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    },
+    "E4.5": {
+      "test_case_name": "missing_input_data",
+      "documented_error_type": "ValidationError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 3,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    },
+    "E4.6": {
+      "test_case_name": "malformed_json",
+      "documented_error_type": "ValidationError",
+      "planned_attempts": 3,
+      "attempts": 3,
+      "http_4xx_rejections": 3,
+      "http_5xx_server_errors": 0,
+      "rejected": 3,
+      "unexpected_success": 0,
+      "unexpected_http_200_responses": 0,
+      "unexpected_http_statuses": 0,
+      "transport_errors": 0,
+      "http_status_distribution": {
+        "422": 3
+      },
+      "observed_error_types": [
+        "ValidationError"
+      ],
+      "documented_type_matches": 3,
+      "inferred_layers": [
+        "pydantic"
+      ]
+    }
+  },
+  "metadata": {
+    "experiment_timestamp_utc": "2026-11-02T21:19:01Z",
+    "run_stamp": "20261102_211901",
+    "base_url": "https://eaas-production-df33.up.railway.app",
+    "explain_url": "https://eaas-production-df33.up.railway.app/explain",
+    "git_head_local": "3be1dd352c9333342b7f7da08d2a80ca33358f02",
+    "deployed_git_revision": "unverified",
+    "python_version": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+    "os": {
+      "system": "Windows",
+      "release": "11",
+      "platform": "Windows-11-10.0.26300-SP0",
+      "machine": "AMD64",
+      "python_implementation": "CPython"
+    },
+    "installed_package_versions": {
+      "httpx": "0.28.1",
+      "joblib": "1.5.3",
+      "numpy": "2.4.4"
+    },
+    "http_client": "httpx",
+    "http_timeout_seconds": 120,
+    "retries": false,
+    "parallel": false,
+    "baseline_input": "artifacts/training_data.pkl X_test[0]",
+    "test_cases": [
+      {
+        "id": "E4.1",
+        "name": "unsupported_model"
+      },
+      {
+        "id": "E4.2",
+        "name": "unsupported_method"
+      },
+      {
+        "id": "E4.3",
+        "name": "incorrect_feature_count"
+      },
+      {
+        "id": "E4.4",
+        "name": "nonnumeric_feature"
+      },
+      {
+        "id": "E4.5",
+        "name": "missing_input_data"
+      },
+      {
+        "id": "E4.6",
+        "name": "malformed_json"
+      }
+    ],
+    "expected_total_requests": 18,
+    "repetitions_per_category": 3
+  }
+}
